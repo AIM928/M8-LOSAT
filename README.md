@@ -4,7 +4,7 @@ M8 vehicle conversion for **Gunner, HEAT, PC!** Replaces stock M2 Bradley instan
 
 ## Install
 
-Download the complete ZIP from [Releases](https://github.com/AIM928/M8-LOSAT/releases/latest). Exit the game, back up old M8 files, and copy `Mods` into the game's `Bin` folder. Keep the DLL and `M8LOSATAssets` together.
+Download the complete ZIP from [Releases](https://github.com/AIM928/M8-LOSAT/releases/latest). Exit the game, back up old M8 files, and copy `M8LOSATM2.dll` and `M8LOSATAssets` directly into the game's `Bin/Mods` folder.
 
 ## Controls
 

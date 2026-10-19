@@ -8,7 +8,9 @@ $ErrorActionPreference='Stop'
 # PowerShell 7 / .NET SDK 7. Use a new output directory, preferably on D:.
 if(Test-Path -LiteralPath $OutputRoot){throw 'Choose a new output directory; existing files will not be overwritten.'}
 $sourceManifest=Get-Content (Join-Path $PSScriptRoot source-manifest.json) -Raw|ConvertFrom-Json
-$releaseDll=Join-Path $ReleaseRoot Mods/M8LOSATM2.dll
+$releaseMods=Join-Path $ReleaseRoot Mods
+if(!(Test-Path -LiteralPath (Join-Path $releaseMods M8LOSATM2.dll))){$releaseMods=$ReleaseRoot}
+$releaseDll=Join-Path $releaseMods M8LOSATM2.dll
 if((Get-FileHash -LiteralPath $releaseDll).Hash -ne 'FA743A7E116BC8D814AFE7FD1DFECD93631E4C617FB03B2B1BA5F93929B2547F'){throw 'Use the unmodified v0.1.69 installation package as the resource input.'}
 $managed=Join-Path $GameRoot GHPC_Data/Managed
 $refs=@('mscorlib.dll','System.dll','System.Core.dll','netstandard.dll','Assembly-CSharp.dll','UnityEngine.CoreModule.dll','UnityEngine.PhysicsModule.dll','UnityEngine.ImageConversionModule.dll','UnityEngine.AudioModule.dll','UnityEngine.ParticleSystemModule.dll','UnityEngine.TerrainPhysicsModule.dll','UnityEngine.AnimationModule.dll','UnityEngine.InputLegacyModule.dll','UnityEngine.IMGUIModule.dll','UnityEngine.TextRenderingModule.dll','Unity.Postprocessing.Runtime.dll','Unity.TextMeshPro.dll','FMODUnity.dll','Rewired_Core.dll')|ForEach-Object {Join-Path $managed $_}
@@ -33,5 +35,5 @@ if($resources.Count -ne 8){throw 'Unexpected embedded resource count'}
 $args=@($CscPath,'/nologo','/target:library','/langversion:latest',('/out:'+(Join-Path $mods M8LOSATM2.dll)))+@($refs|ForEach-Object {'/reference:'+$_})+$sources+$resources
 & dotnet @args
 if($LASTEXITCODE -ne 0){throw 'Compilation failed'}
-Copy-Item -LiteralPath (Join-Path $ReleaseRoot Mods/M8LOSATAssets) -Destination $mods -Recurse
+Copy-Item -LiteralPath (Join-Path $releaseMods M8LOSATAssets) -Destination $mods -Recurse
 Get-FileHash -LiteralPath (Join-Path $mods M8LOSATM2.dll)
