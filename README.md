@@ -1,25 +1,32 @@
 # M8 LOSAT
 
-Vehicle conversion mod for **Gunner, HEAT, PC!** Replaces stock M2 Bradley instances; select or place the original M2 in missions.
+M8 vehicle conversion for **Gunner, HEAT, PC!** Replaces stock M2 Bradley instances.
 
-## Download and install
+## Install
 
-Download the complete ZIP from [Releases](https://github.com/AIM928/M8-LOSAT/releases/latest). Exit the game and back up existing M8 files. With MelonLoader installed, copy the included `Mods` folder into the game's `Bin` folder. Keep one `M8LOSATM2.dll` and the complete `M8LOSATAssets` folder together. Do not replace game assemblies.
+Download the complete ZIP from [Releases](https://github.com/AIM928/M8-LOSAT/releases/latest). Exit the game, back up old M8 files, and copy `Mods` into the game's `Bin` folder. Keep the DLL and `M8LOSATAssets` together.
 
-Reference: GHPC `0.1.0-alpha+20261014`, Windows x64, Unity `2022.3.62f2`, MelonLoader `0.7.3` (`net35`). Other versions are unverified. No other mod dependency is required. Game and loader files are not included.
+## Controls
 
-## Fire control
+- `E`: auto-lock targets
+- `Backspace`: clear all locks
+- Middle mouse: lock a single target
+- Tube status: `R` ready, `E` empty, `X` damaged; `F` indicates sight failure.
 
-`E` scans the current sight; middle mouse selects/releases a target. Up to three guidance channels, three missiles per target. Use normal game firing/sight controls. Tube indicators: `R` ready, `E` empty, `X` damaged. Lower status `F` indicates sight failure and disables target locking. Custom replenishment, smoke grenades and crew speech are disabled.
+## Source and build
 
-## v0.1.69
+`src/` contains all 97 C# files compiled into v0.1.69. The original installed DLL and release ZIP are unchanged. This branch includes the source; the existing v0.1.69 tag still points to its original release commit.
 
-Native impact sounds restored. The inherited TOW rocket loop stays muted only on M8 missiles; original mute values are restored before pool reuse. The user reports this resolved repeated-launch gurgling in v0.1.68. Custom launch sound and existing volume preferences are unchanged. Reload/mechanical audio and sonic boom remain disabled. Other vehicle customization is retained.
+Use PowerShell 7 and .NET SDK 7, with the reference GHPC `0.1.0-alpha+20261014` installation and MelonLoader `0.7.3` (`net35`). Unzip the v0.1.69 package separately for model/texture/audio inputs. Proprietary game assemblies are read locally, never distributed here.
 
-Installed locally before publication; offline regression checks passed. Restored impact audio still awaits a new in-game listening confirmation. Compatibility and performance are not guaranteed.
+```powershell
+./build.ps1 -GameRoot 'D:/Games/GHPC/Bin' -ReleaseRoot 'D:/BuildInputs/M8-LOSAT-v0.1.69' -OutputRoot 'D:/Builds/M8-custom' -CscPath 'C:/Program Files/dotnet/sdk/7.0.410/Roslyn/bincore/csc.dll'
+```
 
-DLL SHA256: `FA743A7E116BC8D814AFE7FD1DFECD93631E4C617FB03B2B1BA5F93929B2547F`
+Use a new output folder. The build does not install anything. Resource data is extracted from the official v0.1.69 mod DLL without executing it. Other game versions are unverified. Compiler/environment changes can affect output hashes.
 
-## Permissions
+Original v0.1.69 DLL SHA256: `FA743A7E116BC8D814AFE7FD1DFECD93631E4C617FB03B2B1BA5F93929B2547F`.
 
-No license is granted for third-party models, textures or audio. Launch audio comes from a user-supplied recording; its original source and redistribution license have not been independently verified. It is not claimed to be public-domain or an authentic LOSAT recording. No game binaries, personal logs, configuration files or backups are distributed.
+## License
+
+Project-authored source code and build tooling are MIT licensed; see [LICENSE](LICENSE). This does not license third-party models, textures, recordings, game code or dependencies. No such rights are granted by this repository. Assets remain separate release inputs; the user-supplied launch recording's provenance and redistribution license have not been independently verified.
